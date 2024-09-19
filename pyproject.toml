@@ -1,0 +1,19 @@
+[project]
+name = "mnist"
+version = "0.1.0"
+description = "mnist"
+authors = [
+    {name = "GITSangWoo", email = "dogcenta@gmail.com"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "GNU"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true

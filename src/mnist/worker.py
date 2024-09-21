@@ -12,12 +12,25 @@ def run():
     # RANDOM 으로 0 ~ 9 중 하나 값을 prediction_result 컬럼에 업데이트
     import random
     rnum= random.randint(0,9) 
-    sql= "UPDATE  image_processing SET prediction_result=%s WHERE num = %s"
+    sql= "UPDATE image_processing SET prediction_result=%s WHERE num = %s"
     insert_row=dml(sql,rnum,result[0]['num'])
     # 업데이트 확인용 
     # 동시에 prediction_model, prediction_time 도 업데이트
+    sql= "UPDATE image_processing SET prediction_model= %s,prediction_time=%s WHERE num = %s"
+    insert_row=dml(sql,f"model{rnum}.pkl",jigeum.seoul.now(),result[0]['num'])
 
     # STEP 3
     # LINE 으로 처리 결과 전송
+    import requests   
+    api_url = "https://notify-api.line.me/api/notify"
+    token = "qhUkuuhr71IfTAlwiIwpj8Miy9F4C2BRB0fRGiOMyiL" 
+
+    headers = {'Authorization':'Bearer '+token}
+
+    message = {
+       "message" : f"{jigeum.seoul.now()}:task done successful"
+    }
+
+    requests.post(api_url, headers= headers , data = message)
 
     print(f"작업 요청 시간:{jigeum.seoul.now()}")

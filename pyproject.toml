@@ -1,6 +1,6 @@
 [project]
 name = "mnist"
-version = "0.4.1"
+version = "0.4.2"
 description = "mnist"
 authors = [
     {name = "GITSangWoo", email = "dogcenta@gmail.com"},
@@ -12,6 +12,7 @@ dependencies = [
     "python-multipart>=0.0.9",
     "pytz>=2024.2",
     "SWjigeum>=0.3.0",
+    "requests>=2.32.3",
 ]
 requires-python = ">=3.11"
 readme = "README.md"

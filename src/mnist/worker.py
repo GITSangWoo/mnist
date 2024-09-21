@@ -25,7 +25,6 @@ def run():
     import requests   
     api_url = "https://notify-api.line.me/api/notify"
     token = os.getenv('LINE_API_KEY','false')
-    print(token)
 
     headers = {'Authorization':'Bearer '+token}
 

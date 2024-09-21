@@ -1,4 +1,5 @@
 import jigeum.seoul
+import os 
 
 def run():
     """image_processing 테이블을 읽어서 가장 오래된 요청 하나씩을 처리"""
@@ -23,7 +24,8 @@ def run():
     # LINE 으로 처리 결과 전송
     import requests   
     api_url = "https://notify-api.line.me/api/notify"
-    token = "qhUkuuhr71IfTAlwiIwpj8Miy9F4C2BRB0fRGiOMyiL" 
+    token = os.getenv('LINE_API_KEY','false')
+    print(token)
 
     headers = {'Authorization':'Bearer '+token}
 

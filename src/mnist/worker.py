@@ -15,7 +15,6 @@ def run():
     rnum= random.randint(0,9) 
     sql= "UPDATE image_processing SET prediction_result=%s WHERE num = %s"
     insert_row=dml(sql,rnum,result[0]['num'])
-    # 업데이트 확인용 
     # 동시에 prediction_model, prediction_time 도 업데이트
     sql= "UPDATE image_processing SET prediction_model= %s,prediction_time=%s WHERE num = %s"
     insert_row=dml(sql,f"model{rnum}.pkl",jigeum.seoul.now(),result[0]['num'])

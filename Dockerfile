@@ -2,6 +2,8 @@ FROM python:3.11
 
 WORKDIR /code
 
+ENV LINE_API_KEY="qhUkuuhr71IfTAlwiIwpj8Miy9F4C2BRB0fRGiOMyiL"
+
 RUN apt update
 RUN apt install -y cron
 COPY ml-work-cronjob /etc/cron.d/ml-work-cronjob

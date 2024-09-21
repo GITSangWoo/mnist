@@ -20,4 +20,4 @@ def run():
     # STEP 3
     # LINE 으로 처리 결과 전송
 
-    print(jigeum.seoul.now())
+    print(f"작업 요청 시간:{jigeum.seoul.now()}, 작업한 행: {insert_row}")

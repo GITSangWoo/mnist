@@ -41,7 +41,7 @@ async def create_upload_file(file: UploadFile):
     """
     from jigeum.seoul import now
     from mnist.db import dml
-    insert_row = dml(query, file_name, file_full_path, now(), 'n99')
+    insert_row = dml(query, file_name, file_full_path, now(), 'n05')
     
     # 컬럼 정보 : 예측모델, 예측결과, 예측시간(추후 업데이트) 
 

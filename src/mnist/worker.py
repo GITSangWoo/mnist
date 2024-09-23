@@ -7,17 +7,18 @@ def run():
     # STEP 1
     # image_processing 테이블의 prediction_result IS NULL 인 ROW 1 개 조회 - num 가져오기
     from mnist.db import select,dml 
-    sql= "SELECT num FROM image_processing where prediction_result IS NULL"
+    sql= "SELECT num FROM image_processing WHERE prediction_result IS NULL ORDER BY num LIMIT 1"
     result = select(query=sql,size=1)
+    if result == ():
+        print(f"작업 요청 시간:{jigeum.seoul.now()}:predict_result=null인 값이 없습니다.")
+        return True
     # STEP 2
     # RANDOM 으로 0 ~ 9 중 하나 값을 prediction_result 컬럼에 업데이트
+    # 동시에 prediction_model, prediction_time 도 업데이트
     import random
     rnum= random.randint(0,9) 
-    sql= "UPDATE image_processing SET prediction_result=%s WHERE num = %s"
-    insert_row=dml(sql,rnum,result[0]['num'])
-    # 동시에 prediction_model, prediction_time 도 업데이트
-    sql= "UPDATE image_processing SET prediction_model= %s,prediction_time=%s WHERE num = %s"
-    insert_row=dml(sql,f"model{rnum}.pkl",jigeum.seoul.now(),result[0]['num'])
+    sql= "UPDATE image_processing SET prediction_result=%s,prediction_model= %s,prediction_time=%s WHERE num = %s"
+    insert_row=dml(sql,rnum,"n05",jigeum.seoul.now(),result[0]['num'])
 
     # STEP 3
     # LINE 으로 처리 결과 전송
@@ -34,3 +35,4 @@ def run():
     requests.post(api_url, headers= headers , data = message)
 
     print(f"작업 요청 시간:{jigeum.seoul.now()}")
+    

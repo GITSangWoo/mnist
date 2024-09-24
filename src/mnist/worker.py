@@ -29,7 +29,6 @@ def run():
     # 모델로 예측한 값을  prediction_result 컬럼에 업데이트
     # 모델 로드
     model_path=get_model_path()
-    print(model_path)
     model = load_model(model_path) 
     # 사용자 이미지 불러오기 및 전처리
     def preprocess_image(image_path):
@@ -56,17 +55,14 @@ def run():
     extract_path = select(query=sql,size=1)
     print(extract_path)
     image_path= extract_path[0]['file_path']
-    # image_path = '/home/centa/code/mnist/note/train_img/my_picture1.png'
 
     # 예측 실행
     predicted_digit = predict_digit(image_path)
     print("예측된 숫자:", predicted_digit)
     
     # 동시에 prediction_model, prediction_time 도 업데이트
-    import random
-    rnum= random.randint(0,9) 
     sql= "UPDATE image_processing SET prediction_result=%s,prediction_model= %s,prediction_time=%s WHERE num = %s"
-    insert_row=dml(sql,predicted_digit,model_path,jigeum.seoul.now(),result[0]['num'])
+    insert_row=dml(sql,predicted_digit,os.path.basename(model_path),jigeum.seoul.now(),result[0]['num'])
 
     # STEP 3
     # LINE 으로 처리 결과 전송

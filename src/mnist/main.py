@@ -21,7 +21,7 @@ async def create_upload_file(file: UploadFile):
     file_name  = file.filename
     file_ext = file.content_type.split('/')[-1] 
     # 디렉토리가 없으면 오류, 코드에서 확인 및 만들기 추가
-    upload_dir = "/home/centa/code/mnist/img"
+    upload_dir = "/home/ubuntu/images/n05"
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
     import uuid 

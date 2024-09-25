@@ -7,8 +7,6 @@ from pytz import timezone
 
 app = FastAPI()
 
-
-
 @app.post("/files/")
 async def create_file(file: Annotated[bytes, File()]):
     return {"file_size": len(file)}
@@ -19,6 +17,7 @@ async def create_upload_file(file: UploadFile):
     # 파일 저장 (async, await 비동기 키워드:파일은 즉시 업로드하는게 불가능하기 떄문에)
     img = await file.read()
     file_name  = file.filename
+    label = file_name[0]
     file_ext = file.content_type.split('/')[-1] 
     # 디렉토리가 없으면 오류, 코드에서 확인 및 만들기 추가
     upload_dir = "/home/ubuntu/images/n05"
@@ -37,16 +36,17 @@ async def create_upload_file(file: UploadFile):
     # 컬럼 정보 : num(초기 인서트, 자동 증가)
     # 컬럼 정보 : 파일이름, 파일경로, 요청시간(초기 인서트), 요청사용자(n00)
     query = """
-    INSERT INTO image_processing(file_name, file_path,request_time,request_user) VALUES (%s,%s,%s,%s)
+    INSERT INTO image_processing(file_name,label,file_path,request_time,request_user) VALUES (%s,%s,%s,%s,%s)
     """
     from jigeum.seoul import now
     from mnist.db import dml
-    insert_row = dml(query, file_name, file_full_path, now(), 'n05')
+    insert_row = dml(query, file_name, label, file_full_path, now(), 'n05')
     
     # 컬럼 정보 : 예측모델, 예측결과, 예측시간(추후 업데이트) 
 
     return {
-            "filename": file.filename,   
+            "filename": file.filename,
+            "label" : label,   
             "content_type": file.content_type,
             "file_full_path" : file_full_path,
             "insert_row" : insert_row

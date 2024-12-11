@@ -1,11 +1,19 @@
 [project]
 name = "mnist"
-version = "0.1.0"
+version = "0.4.6"
 description = "mnist"
 authors = [
     {name = "GITSangWoo", email = "dogcenta@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "fastapi>=0.114.1",
+    "uvicorn[standard]>=0.30.6",
+    "PyMySQL>=1.1.1",
+    "python-multipart>=0.0.9",
+    "pytz>=2024.2",
+    "SWjigeum>=0.3.0",
+    "requests>=2.32.3",
+]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "GNU"}
@@ -14,6 +22,8 @@ license = {text = "GNU"}
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[project.scripts]
+ml-worker = 'mnist.worker:run'
 
 [tool.pdm]
 distribution = true
